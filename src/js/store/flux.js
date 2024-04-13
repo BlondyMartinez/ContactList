@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			users: [],
-			user: {},
+			user: { "slug": "blondy" },
 			contacts: [],
 		},
 		actions: {
@@ -13,8 +13,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.catch(error => { console.error('Error fetching users:', error); });
 			},
 
-			loadContactList: (username) => {
-				fetch(`https://playground.4geeks.com/contact/agendas/${username}/contacts`)
+			loadContactList: () => {
+				fetch(`https://playground.4geeks.com/contact/agendas/${getStore().user.slug}/contacts`)
 				.then(response => { return response.json(); })
 				.then(data => { setStore({ "contacts": data.contacts }); })
 				.catch(error => { console.error('Error fetching contacts:', error); });
@@ -29,6 +29,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				fetch(`https://playground.4geeks.com/contact/agendas/${username}`, config)
 				.then(() => { getActions().loadContactList(username); setStore({ "user": username }); })
+				.catch(error => { console.error('Error fetching contacts:', error); });
+			},
+
+			addContact: (name, email, phone, address) => {
+				console.log(name, email, phone, address)
+				const contact = {
+					"name": name,
+					"phone": phone,
+					"email": email,
+					"address": address
+				}
+
+				const config = { 
+					method: "POST",
+					body: JSON.stringify(contact),
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					}
+				}
+
+				fetch(`https://playground.4geeks.com/contact/agendas/${getStore().user.slug}/contacts`, config)
+				.then(response => { return response.json(); })
+				.then(() => getActions().loadContactList())
 				.catch(error => { console.error('Error fetching contacts:', error); });
 			}
 		}

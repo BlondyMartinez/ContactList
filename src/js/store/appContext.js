@@ -18,7 +18,7 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
-			state.actions.loadContactList('blondy');
+			state.actions.loadContactList();
 		}, []);
 
 		return (
