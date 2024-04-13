@@ -1,56 +1,22 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
+import useFormValidation from '../hooks/useFormValidation';
 
 const NewContact = () => {
-    const { store, actions } = useContext(Context);
-
-    const [isValid, setIsValid] = useState(false);
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [address, setAddress] = useState("");
-    const [isEmailValid, setIsEmailValid] = useState(true);
-
-    useEffect(() => {
-        const initializeValidation = () => {
-            const forms = document.querySelectorAll('.needs-validation');
-
-            Array.prototype.slice.call(forms).forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        };
-
-        initializeValidation();
-    }, []);
-
-    useEffect(() => {
-        validateEmail();
-    }, [email])
-
-    useEffect(() => {
-        validate();
-    }, [email, isEmailValid]);
-
-    function validate() {
-        setIsValid(
-            address.trim() !== "" ||
-            isEmailValid ||
-            phone.trim() !== ""
-        );
-    }
-    
-    const validateEmail = () => {
-        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        setIsEmailValid(pattern.test(email));
-    };
+    const { actions } = useContext(Context);
+    const {
+        name,
+        setName,
+        email,
+        setEmail,
+        phone,
+        setPhone,
+        address,
+        setAddress,
+        isEmailValid,
+        isValid,
+    } = useFormValidation();
 
     const handleSubmit = (event) => {
         event.preventDefault();
