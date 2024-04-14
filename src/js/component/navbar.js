@@ -15,7 +15,7 @@ export const Navbar = () => {
 
 
 	return (
-		<nav className="navbar navbar-dark bg-dark mb-3 sticky-top">
+		<nav className="navbar navbar-dark bg-dark mb-2 sticky-top">
 			<Link to="/">
 				<span className="navbar-brand m-2 h1">{`${username}${endsInS ? "'" : "'s"} Agenda`}</span>
 			</Link>
