@@ -4,6 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			users: [],
 			user: { "slug": "blondy" },
 			contacts: [],
+			selectedCode: "",
 		},
 		actions: {
 			loadUserList: () => {
@@ -33,7 +34,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			addContact: (name, email, phone, address) => {
-				console.log(name, email, phone, address)
 				const contact = {
 					"name": name,
 					"phone": phone,
@@ -54,7 +54,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then(response => { return response.json(); })
 				.then(() => getActions().loadContactList())
 				.catch(error => { console.error('Error fetching contacts:', error); });
-			}
+			},
+
+			setSelectedCode: (code) => {
+                const store = getStore();
+                setStore({ ...store, selectedCode: code });
+            },
+
+            getSelectedCode: () => {
+                const store = getStore();
+                return store.selectedCode;
+            }
 		}
 	};
 };
