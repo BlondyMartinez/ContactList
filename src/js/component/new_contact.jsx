@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import useFormValidation from '../hooks/useFormValidation';
@@ -22,20 +22,20 @@ const NewContact = () => {
         wasValidated,
     } = useFormValidation();
 
+    const [saved, setSaved] = useState(false);
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (!isValid) alert("Please provide either a phone number, email, or address.");
-        else {
+        if (isValid) {
             actions.addContact(name, email, phone, address);
             resetFields();
-        }
+            setSaved(true);
+        } else setSaved(false);
     };
 
     const handlePhoneChange = (event)  => {
         const input = event.target.value;
         const regex = /^[0-9\b]*$/;
-        
-        console.log(regex.test(input))
 
         if (regex.test(input)) setPhone(input);
     }
@@ -43,6 +43,14 @@ const NewContact = () => {
     return (
         <form className="col-sm-11 col-md-8 col-lg-6 needs-validation" onSubmit={handleSubmit} noValidate>
             <h1 className="text-center">Add a new contact</h1>
+
+            {(wasValidated || saved) && 
+                <div className={`alert ${saved ? 'alert-success' : 'alert-danger'}`} role="alert">
+                        {saved 
+                        ? 'New contact saved successfully.' 
+                        : "Please make sure you've at least filled the name and at least one of the other fields with valid information."}
+                </div>
+            }
 
             <div className="mb-3">
                 <label htmlFor="full-name" className="form-label">Full Name</label>
