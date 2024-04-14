@@ -1,3 +1,5 @@
+import { parsePhoneNumberFromString } from 'libphonenumber-js'
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -35,9 +37,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			addContact: (name, email, phone, address) => {
+				const formattedPhone = parsePhoneNumberFromString('+' + getStore().selectedCode + phone).formatInternational();
 				const contact = {
 					"name": name,
-					"phone": phone,
+					"phone": formattedPhone,
 					"email": email,
 					"address": address
 				}
