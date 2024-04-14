@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import { Context } from "../store/appContext";
+import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
-import useFormValidation from '../hooks/useFormValidation';
+import useFormValidation from '../hooks/useFormValidation.js';
 import PhoneCode from "./phone_code.jsx";
 
 const NewContact = () => {
