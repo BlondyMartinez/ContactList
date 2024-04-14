@@ -1,8 +1,8 @@
 import React from "react";
 import "../../styles/new_contact.css";
-import NewContact from "../component/new_contact.jsx"; 
+import NewContact from "../component/contact_form.jsx"; 
 
-export const NewContactPage = () => (
+export const ContactFormPage = () => (
     <div className="d-flex justify-content-center">
 	    <NewContact />
     </div>
