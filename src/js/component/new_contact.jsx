@@ -16,6 +16,7 @@ const NewContact = () => {
         address,
         setAddress,
         isEmailValid,
+        isPhoneValid,
         isValid,
         resetFields,
         wasValidated,
@@ -29,6 +30,15 @@ const NewContact = () => {
             resetFields();
         }
     };
+
+    const handlePhoneChange = (event)  => {
+        const input = event.target.value;
+        const regex = /^[0-9\b]*$/;
+        
+        console.log(regex.test(input))
+
+        if (regex.test(input)) setPhone(input);
+    }
 
     return (
         <form className="col-sm-11 col-md-8 col-lg-6 needs-validation" onSubmit={handleSubmit} noValidate>
@@ -52,11 +62,19 @@ const NewContact = () => {
                 <label htmlFor="phone-number" className="form-label">Phone Number</label>
                 <div className="d-flex">
                     <PhoneCode phone={phone}></PhoneCode>
-                    <input type="text" className="form-control" id="phone-number" placeholder="Enter phone number" value={phone} onChange={(e) => { setPhone(e.target.value); }} />
+                    <input 
+                        type="text" className={`form-control ${!isPhoneValid && wasValidated && phone != "" ? "is-invalid" : ""}`} 
+                        id="phone-number" 
+                        placeholder="Enter phone number" 
+                        value={phone} 
+                        onChange={handlePhoneChange} 
+                    />
                 </div>
-                <div className="invalid-feedback">
-                    Please enter a valid phone number.
-                </div>
+                {!isPhoneValid && wasValidated && phone !== "" && (
+                    <div className="text-danger" style={{ fontSize: ".875rem"}}>
+                        Please enter a valid phone number.
+                    </div>
+                )}
             </div>
 
             <div className="mb-3">

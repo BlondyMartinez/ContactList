@@ -1,11 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { isValidPhoneNumber, parsePhoneNumber } from 'libphonenumber-js'
+import { Context } from "../store/appContext";
 
 const useFormValidation = () => {
+    const { store } = useContext(Context);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [address, setAddress] = useState("");
     const [isEmailValid, setIsEmailValid] = useState(true);
+    const [phone, setPhone] = useState("");
+    const [isPhoneValid, setIsPhoneValid] = useState(true);
+    const [address, setAddress] = useState("");
     const [isValid, setIsValid] = useState(false);
     const [wasValidated, setWasValidated] = useState(false);
 
@@ -35,20 +39,28 @@ const useFormValidation = () => {
     }, [email]);
 
     useEffect(() => {
+        validatePhoneNumber();
+    }, [phone]);
+
+    useEffect(() => {
         validate();
-    }, [email, isEmailValid]);
+    }, [email, isEmailValid, phone, isPhoneValid]);
 
     function validate() {
         setIsValid(
         address.trim() !== "" ||
         isEmailValid ||
-        phone.trim() !== ""
+        isPhoneValid
         );
     }
 
     const validateEmail = () => {
         const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         setIsEmailValid(pattern.test(email));
+    };
+
+    const validatePhoneNumber = () => {
+        setIsPhoneValid(isValidPhoneNumber(phone, store.selectedAlphaCode));
     };
 
     function resetFields() {
@@ -58,6 +70,7 @@ const useFormValidation = () => {
         setPhone("");
         setWasValidated(false);
         setIsEmailValid(false);
+        setIsPhoneValid(false);
         setIsValid(false);
         const forms = document.querySelectorAll('.needs-validation');
 
@@ -76,6 +89,7 @@ const useFormValidation = () => {
         address,
         setAddress,
         isEmailValid,
+        isPhoneValid,
         isValid,
         resetFields,
         wasValidated,
