@@ -15,9 +15,9 @@ export const Navbar = () => {
 
 
 	return (
-		<nav className="navbar navbar-light bg-light mb-3">
+		<nav className="navbar navbar-dark bg-dark mb-3 sticky-top">
 			<Link to="/">
-				<span className="navbar-brand mb-0 h1">{`${username}${endsInS ? "'" : "'s"} Agenda`}</span>
+				<span className="navbar-brand m-2 h1">{`${username}${endsInS ? "'" : "'s"} Agenda`}</span>
 			</Link>
 			<div className="ml-auto">
 			</div>
