@@ -37,9 +37,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			addContact: (name, email, phone, address) => {
-				const formattedPhone = 0;
+				let formattedPhone = "";
 				if(phone !== "") formattedPhone = parsePhoneNumberFromString('+' + getStore().selectedCode + phone).formatInternational();
-				
+
 				const contact = {
 					"name": name,
 					"phone": formattedPhone,
