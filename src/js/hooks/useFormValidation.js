@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { isValidPhoneNumber } from 'libphonenumber-js'
+import { isValidPhoneNumber, parsePhoneNumber } from 'libphonenumber-js'
 import { Context } from "../store/appContext";
 
 const useFormValidation = () => {
@@ -15,23 +15,24 @@ const useFormValidation = () => {
 
     
     useEffect(() => {
-        const initializeValidation = () => {
-            const forms = document.querySelectorAll('.needs-validation');
-
-            Array.prototype.slice.call(forms).forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-
-                    form.classList.add('was-validated');
-                    setWasValidated(true);
-                }, false);
-            });
-        };
-
         initializeValidation();
+        
+        store.selectedAlphaCode = "";
+        store.selectedCode = ""; 
+
+        if (store.editing) {
+            const currentContact = store.contacts.find(contact => contact.id === store.currentID);
+
+            let phoneInfo = parsePhoneNumber(currentContact.phone);
+
+            store.selectedAlphaCode = phoneInfo.country;
+            store.selectedCode = phoneInfo.countryCallingCode; 
+
+            setName(currentContact.name);
+            setEmail(currentContact.email);
+            setPhone(phoneInfo.nationalNumber.replace(/\s/g, ''));
+            setAddress(currentContact.address);
+        }
     }, []);
 
     useEffect(() => {
@@ -45,6 +46,22 @@ const useFormValidation = () => {
     useEffect(() => {
         validate();
     }, [email, isEmailValid, phone, isPhoneValid, address]);
+
+    const initializeValidation = () => {
+        const forms = document.querySelectorAll('.needs-validation');
+
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                form.classList.add('was-validated');
+                setWasValidated(true);
+            }, false);
+        });
+    };
 
     function validate() {
         setIsValid(

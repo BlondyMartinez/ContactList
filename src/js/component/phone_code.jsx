@@ -14,6 +14,11 @@ const PhoneCode = ({ phone }) => {
     .catch((error) => console.error("Error fetching country data:", error));
   }, []);
 
+  useEffect(()=> {
+    setSelectedCode(`${store.selectedAlphaCode}_${store.selectedCode}`)
+    setSelectedAlphaCode(store.selectedAlphaCode);
+  }, [store.selectedCode, store.selectedAlphaCode]);
+
   const handleCodeChange = (e) => {
     store.selectedAlphaCode = e.target.value.split('_')[0];
     store.selectedCode = e.target.value.split('_')[1]

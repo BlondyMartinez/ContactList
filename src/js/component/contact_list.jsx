@@ -6,6 +6,7 @@ const ContactList = () => {
     const { store } = useContext(Context);
 
     const contacts = store.contacts;
+    store.editing = false;
 
     return (
         <div style={{ paddingBottom: "4rem" }} className="d-flex flex-column align-items-center justify-content-center">

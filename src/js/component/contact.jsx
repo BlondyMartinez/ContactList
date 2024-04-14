@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
+import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 
 const Contact = (props) => {
-    const { actions } = useContext(Context);
+    const { store, actions } = useContext(Context);
 
     const [isOpen, setIsOpen] = useState(false);
     const [onHover, setOnHover] = useState(false);
@@ -22,9 +23,11 @@ const Contact = (props) => {
                 </div>
                 <div>
                     { onHover &&
-                        <button className="btn">
-                            <Icon className="fs-5 text-primary" icon="material-symbols:edit-square-outline" />
-                        </button>
+                        <Link to={"/contact_form"}>
+                            <button className="btn" onClick={() => { store.editing = true; store.currentID = props.id; }}>
+                                <Icon className="fs-5 text-primary" icon="material-symbols:edit-square-outline" />
+                            </button>
+                        </Link>
                     }
                     { onHover &&
                         <button className="btn" onClick={() => { actions.deleteContact(props.id) }}>

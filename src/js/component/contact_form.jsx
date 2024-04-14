@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import useFormValidation from '../hooks/useFormValidation.js';
 import PhoneCode from "./phone_code.jsx";
 
-const NewContact = () => {
-    const { actions } = useContext(Context);
+const ContactForm = () => {
+    const { store, actions } = useContext(Context);
     const {
         name,
         setName,
@@ -27,7 +27,13 @@ const NewContact = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (isValid) {
-            actions.addContact(name, email, phone, address);
+            if (!store.editing) actions.addContact(name, email, phone, address);
+            else {
+                actions.editContact(name, email, phone, address, store.currentID);
+                store.editing = false;
+                store.currentID = null;
+            }
+
             resetFields();
             setSaved(true);
         } else setSaved(false);
@@ -42,12 +48,12 @@ const NewContact = () => {
 
     return (
         <form className="col-sm-11 col-md-8 col-lg-6 needs-validation" onSubmit={handleSubmit} noValidate>
-            <h1 className="text-center">Add a new contact</h1>
+            <h1 className="text-center">{store.editing ? "Edit contact" : "Add a new contact"}</h1>
 
             {(wasValidated || saved) && 
                 <div className={`alert ${saved ? 'alert-success' : 'alert-danger'}`} role="alert">
                         {saved 
-                        ? 'New contact saved successfully.' 
+                        ? 'Contact info saved successfully.' 
                         : "Please make sure you've at least filled the name and at least one of the other fields with valid information."}
                 </div>
             }
@@ -99,4 +105,4 @@ const NewContact = () => {
     )
 }
 
-export default NewContact;
+export default ContactForm;

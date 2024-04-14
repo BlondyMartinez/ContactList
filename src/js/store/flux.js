@@ -8,6 +8,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			contacts: [],
 			selectedCode: "",
 			selectedAlphaCode: "",
+			editing: false,
+			currentID: null,
 		},
 		actions: {
 			loadUserList: () => {
@@ -71,7 +73,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 				fetch(`https://playground.4geeks.com/contact/agendas/${getStore().user.slug}/contacts/${id}`, config)
 				.then(() => getActions().loadContactList())
 				.catch(error => { console.error('Error fetching contacts:', error); });
-			}
+			},
+
+			editContact(name, email, phone, address, id) {
+				let formattedPhone = "";
+				if(phone !== "") formattedPhone = parsePhoneNumberFromString('+' + getStore().selectedCode + phone).formatInternational();
+
+				const contact = {
+					"name": name,
+					"phone": formattedPhone,
+					"email": email,
+					"address": address,
+				}
+
+				const config = { 
+					method: "PUT",
+					body: JSON.stringify(contact),
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					}
+				}
+
+				fetch(`https://playground.4geeks.com/contact/agendas/${getStore().user.slug}/contacts/${id}`, config)
+				.then(response => { return response.json(); })
+				.then(() => getActions().loadContactList())
+				.catch(error => { console.error('Error fetching contacts:', error); });
+			},
 		}
 	};
 };
