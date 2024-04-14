@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { isValidPhoneNumber, parsePhoneNumber } from 'libphonenumber-js'
+import { isValidPhoneNumber } from 'libphonenumber-js'
 import { Context } from "../store/appContext";
 
 const useFormValidation = () => {
@@ -48,9 +48,9 @@ const useFormValidation = () => {
 
     function validate() {
         setIsValid(
-        address.trim() !== "" ||
-        isEmailValid ||
-        isPhoneValid
+           (address.trim() !== "" || isEmailValid || isPhoneValid) && 
+           (phone === "" || isPhoneValid) &&
+           (email === "" || isEmailValid) 
         );
     }
 
@@ -72,6 +72,10 @@ const useFormValidation = () => {
         setIsEmailValid(false);
         setIsPhoneValid(false);
         setIsValid(false);
+
+        store.selectedAlphaCode = "";
+        store.selectedCode = "";
+
         const forms = document.querySelectorAll('.needs-validation');
 
         Array.prototype.slice.call(forms).forEach(function (form) {
