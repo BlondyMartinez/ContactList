@@ -44,7 +44,7 @@ const useFormValidation = () => {
 
     useEffect(() => {
         validate();
-    }, [email, isEmailValid, phone, isPhoneValid]);
+    }, [email, isEmailValid, phone, isPhoneValid, address]);
 
     function validate() {
         setIsValid(
