@@ -4,6 +4,7 @@ import { Context } from "../store/appContext";
 const PhoneCode = ({ phone }) => {
   const { store } = useContext(Context);
   const [selectedCode, setSelectedCode] = useState('');
+  const [selectedAlphaCode, setSelectedAlphaCode] = useState('');
   const [countryData, setCountryData] = useState([]);
 
   useEffect(() => {
@@ -17,14 +18,15 @@ const PhoneCode = ({ phone }) => {
     store.selectedAlphaCode = e.target.value.split('_')[0];
     store.selectedCode = e.target.value.split('_')[1]
     setSelectedCode(`${store.selectedAlphaCode}_${store.selectedCode}`)
+    setSelectedAlphaCode(store.selectedAlphaCode);
   };
 
   return (
     <div className="d-flex align-items-center">
-      {store.selectedAlphaCode && (
+      {selectedAlphaCode && (
         <img
-          src={countryData.find((country) => country.alpha2Code === store.selectedAlphaCode)?.flags.svg}
-          alt={countryData.find((country) => country.alpha2Code === store.selectedAlphaCode)?.name}
+          src={countryData.find((country) => country.alpha2Code === selectedAlphaCode)?.flags.svg}
+          alt={countryData.find((country) => country.alpha2Code === selectedAlphaCode)?.name}
           className="w-auto"
           style={{ height: "2rem", marginRight: "5px", border: "2px solid black" }}
         />
