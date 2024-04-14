@@ -8,7 +8,7 @@ const ContactList = () => {
     const contacts = store.contacts;
 
     return (
-        <div>
+        <div style={{ paddingBottom: "4rem" }}>
             {contacts.map((contact) => (
                 <React.Fragment key={contact.id}>
                     <Contact name={contact.name} id={contact.id} email={contact.email} phone={contact.phone} address={contact.address} />
