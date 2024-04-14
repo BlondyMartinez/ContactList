@@ -37,12 +37,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			addContact: (name, email, phone, address) => {
-				const formattedPhone = parsePhoneNumberFromString('+' + getStore().selectedCode + phone).formatInternational();
+				const formattedPhone = 0;
+				if(phone !== "") formattedPhone = parsePhoneNumberFromString('+' + getStore().selectedCode + phone).formatInternational();
+				
 				const contact = {
 					"name": name,
 					"phone": formattedPhone,
 					"email": email,
-					"address": address
+					"address": address,
 				}
 
 				const config = { 
@@ -59,6 +61,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then(() => getActions().loadContactList())
 				.catch(error => { console.error('Error fetching contacts:', error); });
 			},
+
+			deleteContact(id) {
+				const config = { 
+					method: "DELETE",
+					headers: { 'Accept': 'application/json' }
+				}
+
+				fetch(`https://playground.4geeks.com/contact/agendas/${getStore().user.slug}/contacts/${id}`, config)
+				.then(() => getActions().loadContactList())
+				.catch(error => { console.error('Error fetching contacts:', error); });
+			}
 		}
 	};
 };
