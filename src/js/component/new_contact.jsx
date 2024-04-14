@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import useFormValidation from '../hooks/useFormValidation';
+import PhoneCode from "./phone_code.jsx";
 
 const NewContact = () => {
     const { actions } = useContext(Context);
@@ -16,6 +17,8 @@ const NewContact = () => {
         setAddress,
         isEmailValid,
         isValid,
+        resetFields,
+        wasValidated,
     } = useFormValidation();
 
     const handleSubmit = (event) => {
@@ -23,6 +26,7 @@ const NewContact = () => {
         if (!isValid) alert("Please provide either a phone number, email, or address.");
         else {
             actions.addContact(name, email, phone, address);
+            resetFields();
         }
     };
 
@@ -37,16 +41,19 @@ const NewContact = () => {
             
             <label htmlFor="email" className="form-label">Email address</label>
             <div className="input-group mb-3">
-                <input type="text" id="email" placeholder="Enter email" aria-describedby="basic-addon2" className={`form-control ${!isEmailValid ? "is-invalid" : ""}`} value={email} onChange={(e) => { setEmail(e.target.value); }} />
+                <input type="text" id="email" placeholder="Enter email" aria-describedby="basic-addon2" className={`form-control ${!isEmailValid && wasValidated && email != "" ? "is-invalid" : ""}`} value={email} onChange={(e) => { setEmail(e.target.value); }} />
                 <span className="input-group-text" id="basic-addon2">@example.com</span>
                 <div className="invalid-feedback">
                     Please enter a valid email.
                 </div>
             </div>
             
-            <div className="mb-3">
+            <div className="mb-3 row">
                 <label htmlFor="phone-number" className="form-label">Phone Number</label>
-                <input type="text" className="form-control" id="phone-number" placeholder="Enter phone number" value={phone} onChange={(e) => { setPhone(e.target.value); }} />
+                <div className="d-flex">
+                    <PhoneCode phone={phone}></PhoneCode>
+                    <input type="text" className="form-control" id="phone-number" placeholder="Enter phone number" value={phone} onChange={(e) => { setPhone(e.target.value); }} />
+                </div>
                 <div className="invalid-feedback">
                     Please enter a valid phone number.
                 </div>
