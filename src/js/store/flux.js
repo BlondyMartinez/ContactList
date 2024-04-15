@@ -15,7 +15,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 			getSelectedUser: (value) => {
 				const [slug, id] = value.split("_");
-				console.log(value)
 				
 				if (id === "guest") {
 					setStore({ "user": getStore().guest });
