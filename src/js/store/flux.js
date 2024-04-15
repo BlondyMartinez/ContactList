@@ -17,6 +17,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ "user": user});
 			},
 
+			getSelectedUser: (value) => {
+				const [slug, id] = value.split("_");
+				
+				if (id === "guest") {
+					getActions().setCurrentUser(store.guest);
+				} else {
+					const selectedUser = { "slug": slug, "id": id }
+					getActions().setCurrentUser(selectedUser);
+				}
+			},
+
 			loadUserList: () => {
 				fetch(`https://playground.4geeks.com/contact/agendas?offset=0&limit=100`)
 				.then(response => { return response.json(); })

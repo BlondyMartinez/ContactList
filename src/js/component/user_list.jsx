@@ -13,17 +13,6 @@ const UserList = () => {
         setSelectedValue(`${store.user.slug}_${store.user.id ? store.user.id : ''}`);
     }, [store.user]);
 
-    function getSelectedUser(value) {
-        const [slug, id] = value.split("_");
-        
-        if (id === "guest") {
-            actions.setCurrentUser(store.guest);
-        } else {
-            const selectedUser = { "slug": slug, "id": id }
-            actions.setCurrentUser(selectedUser);
-        }
-    }
-
     return (
         <div className="row d-flex align-items-center justify-content-center g-1">
             <div className="col-auto fw-bold ps-2">Choose user:</div>
@@ -33,7 +22,7 @@ const UserList = () => {
                     aria-label="User list" 
                     id="user-select"
                     value={selectedValue}
-                    onChange={(e) => getSelectedUser(e.target.value)}
+                    onChange={(e) => actions.getSelectedUser(e.target.value)}
                 >
                     {store.users.map((user) => (
                         <option key={user.id} value={`${user.slug}_${user.id === "guest" ? 'guest' : user.id}`}>{user.slug}</option>
