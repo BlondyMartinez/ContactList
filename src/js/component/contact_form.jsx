@@ -47,7 +47,7 @@ const ContactForm = () => {
     }
 
     return (
-        <form className="col-sm-11 col-md-8 col-lg-6 needs-validation" onSubmit={handleSubmit} noValidate>
+        <form className="col-sm-11 col-md-8 col-lg-6 needs-validation" style={{ paddingBottom: "4rem" }} onSubmit={handleSubmit} noValidate>
             <h1 className="text-center">{store.editing ? "Edit contact" : "Add a new contact"}</h1>
 
             {(wasValidated || saved) && 
