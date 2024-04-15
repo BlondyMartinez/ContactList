@@ -8,11 +8,11 @@ const ContactList = () => {
 
     const contacts = store.contacts;
     store.editing = false;
+    store.userCreated = false;
+
     const [isMobile, setIsMobile] = useState(window.matchMedia('(max-width: 1024px)').matches);
 
     useEffect(() => {
-        store.userCreated = false;
-        
         const mediaQuery = window.matchMedia('(max-width: 1024px)');
         const listener = () => setIsMobile(mediaQuery.matches);
 
