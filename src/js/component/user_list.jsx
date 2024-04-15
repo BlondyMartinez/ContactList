@@ -10,11 +10,11 @@ const UserList = () => {
     }, []);
 
     useEffect(() => {
-        setSelectedValue(`${store.user.slug}_${store.user.id ? store.user.id : ''}`);
-    }, [store.user]);
+        setSelectedValue(`${store.user.slug}_${store.user.id}`);
+    }, [store.user, store.users]);
 
     return (
-        <div className="row d-flex align-items-center justify-content-center g-1">
+        <div className="d-flex align-items-center justify-content-center g-1">
             <div className="col-auto fw-bold ps-2">Choose user:</div>
             <div className="col-auto">
                 <select 

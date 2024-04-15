@@ -96,7 +96,7 @@ const ContactForm = () => {
                 <input type="text" className="form-control" id="address" placeholder="Enter address" value={address} onChange={(e) => { setAddress(e.target.value); }} />
             </div>
 
-            <button className="btn btn-primary w-100">Save</button>
+            <button className="btn btn-success w-100">Save</button>
 
             <Link to="/">
 				<span>or get back to contacts</span>

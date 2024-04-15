@@ -18,23 +18,23 @@ const Contact = (props) => {
         >
             <div className="d-flex align-items-center justify-content-between">   
                 <div className="d-flex align-items-center">
-                    <Icon style={{ fontSize: "6rem" }} icon="ph:user-circle-duotone" /> 
-                    <h3>{props.name}</h3>
+                    <Icon style={{ fontSize: "4rem" }} icon="ph:user-circle-duotone" /> 
+                    <h5>{props.name}</h5>
                 </div>
                 <div>
                     { onHover &&
                         <Link to={"/contact_form"}>
-                            <button className="btn" onClick={() => { store.editing = true; store.currentID = props.id; }}>
-                                <Icon className="fs-5 text-primary" icon="material-symbols:edit-square-outline" />
+                            <button className="btn p-1" onClick={() => { store.editing = true; store.currentID = props.id; }}>
+                                <Icon className="fs-5 text-success" icon="material-symbols:edit-square-outline" />
                             </button>
                         </Link>
                     }
                     { onHover &&
-                        <button className="btn" onClick={() => { actions.deleteContact(props.id) }}>
+                        <button className="btn p-1" onClick={() => { actions.deleteContact(props.id) }}>
                             <Icon className="fs-5 text-danger" icon="material-symbols:delete-outline" />
                         </button>
                     }
-                    <button className="btn me-3" onClick={() => {setIsOpen(!isOpen)}}>
+                    <button className="btn me-3 p-1" onClick={() => {setIsOpen(!isOpen)}}>
                         {isOpen 
                             ? <Icon className="fs-3" icon="material-symbols:arrow-drop-up" /> 
                             : <Icon className="fs-3" icon="material-symbols:arrow-drop-down" />
