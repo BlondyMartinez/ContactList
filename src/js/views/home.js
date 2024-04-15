@@ -6,7 +6,7 @@ import ContactList from "../component/contact_list.jsx";
 export const Home = () => (
 	<div className="container">	
 		<div className="row d-flex flex-column align-items-center">
-			<div className="col-sm-12 col-md-8 col-lg-6">
+			<div className="col-sm-12 col-md-10 col-md-8">
 				<Link to={"/contact_form"}>
 					<button className="btn btn-success mb-2">New Contact</button>
 				</Link>
