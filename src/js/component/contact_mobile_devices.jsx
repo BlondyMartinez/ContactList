@@ -2,12 +2,23 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
+import DeleteConfirmation from "./delete_confirmation.jsx";
 
 const ContactMobile = (props) => {
     const { store, actions } = useContext(Context);
 
     const [isOpen, setIsOpen] = useState(false);
     const [onHover, setOnHover] = useState(false);
+
+    const [showModal, setShowModal] = useState(false);
+
+    const handleShowModal = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
 
     return (
         <div 
@@ -21,7 +32,7 @@ const ContactMobile = (props) => {
                     <Icon className="icon-color" style={{ fontSize: "4rem" }} icon="ph:user-circle-duotone" /> 
                     <h5>{props.name}</h5>
                 </div>
-                <div>
+                <div className="d-flex">
                     { onHover &&
                         <Link to={"/contact_form"}>
                             <button className="btn p-1" onClick={() => { store.editing = true; store.currentID = props.id; }}>
@@ -30,9 +41,12 @@ const ContactMobile = (props) => {
                         </Link>
                     }
                     { onHover &&
-                        <button className="btn p-1" onClick={() => { actions.deleteContact(props.id) }}>
-                            <Icon className="fs-5 text-danger" icon="material-symbols:delete-outline" />
-                        </button>
+                        <div>
+                            <button className="btn p-1 btn-icon" onClick={handleShowModal}>
+                                <Icon className="fs-3 text-danger" icon="material-symbols:delete-outline" />
+                            </button>
+                            <DeleteConfirmation onClose={handleCloseModal} id={props.id} name={props.name} show={showModal}></DeleteConfirmation>
+                        </div>
                     }
                     <button className="btn me-3 p-1" onClick={() => {setIsOpen(!isOpen)}}>
                         {isOpen 
