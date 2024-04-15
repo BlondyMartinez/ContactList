@@ -30,7 +30,12 @@ const NewUser = () => {
                         <label htmlFor="username" className="form-label">Username</label>
                         <input type="text" className="form-control" id="username" placeholder="Enter username" value={username} onChange={handleChange} required/>
                     </div>
-                    <button className="btn btn-success" onClick={() => { if(validUsername) actions.createUser(username); }}>Save</button>
+                    {username != '' && 
+                        <div className={`form-text ${validUsername ? "text-success" :  "text-danger"} mb-2`}>
+                            {validUsername ? "Valid username" : "Username already exists"}
+                        </div>
+                    }
+                    <button className="btn btn-success w-100" disabled={!validUsername} onClick={() => { if(validUsername) actions.createUser(username); }}>Save</button>
                 </div>
             }
 	    </div>
