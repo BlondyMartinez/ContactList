@@ -18,8 +18,13 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
-			state.actions.loadContactList();
+			state.actions.loadUserList();
 		}, []);
+
+		useEffect(() => {
+			if(state.store.user.id != "guest") state.actions.loadContactList();
+			else state.store.contacts = [];
+		}, [state.store.user]);
 
 		return (
 			<Context.Provider value={state}>
