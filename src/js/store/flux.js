@@ -13,18 +13,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			currentID: null,
 		},
 		actions: {
-			setCurrentUser: (user) => {
-				setStore({ "user": user});
-			},
-
 			getSelectedUser: (value) => {
 				const [slug, id] = value.split("_");
+				console.log(value)
 				
 				if (id === "guest") {
-					getActions().setCurrentUser(store.guest);
+					setStore({ "user": getStore().guest });
 				} else {
-					const selectedUser = { "slug": slug, "id": id }
-					getActions().setCurrentUser(selectedUser);
+					const selectedUser = { "slug": slug, "id": id };
+					setStore({ "user": selectedUser });
 				}
 			},
 
@@ -50,7 +47,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 				fetch(`https://playground.4geeks.com/contact/agendas/${username}`, config)
-				.then(() => { getActions().loadContactList(username); setStore({ "user": username }); })
+				.then((response) => response.json())
+				.then((data) => { setStore({ "user": data }); })
+				.then(() => { getActions().loadContactList(); getActions().loadUserList(); })
 				.catch(error => { console.error('Error fetching contacts:', error); });
 			},
 
