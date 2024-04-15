@@ -6,6 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			users: [],
 			guest: { "slug": "Guest", "id": "guest" },
 			user: { "slug": "Guest", "id": "guest" },
+			userCreated: false,
 			contacts: [],
 			selectedCode: "",
 			selectedAlphaCode: "",
@@ -47,7 +48,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				fetch(`https://playground.4geeks.com/contact/agendas/${username}`, config)
 				.then((response) => response.json())
-				.then((data) => { setStore({ "user": data }); })
+				.then((data) => { setStore({ "user": data }); setStore({ "userCreated": true}) })
 				.then(() => { getActions().loadContactList(); getActions().loadUserList(); })
 				.catch(error => { console.error('Error fetching contacts:', error); });
 			},
