@@ -9,17 +9,19 @@ export const Navbar = () => {
 
 	useEffect(() => {
         setUsername(store.user?.slug || "");
-        
         setEndsInS(store.user?.slug?.toLowerCase().endsWith("s") || false);
     }, [store.user])
 
 
 	return (
 		<nav className="navbar navbar-dark bg-dark mb-2 sticky-top">
-			<Link to="/">
-				<span className="navbar-brand m-2 h1">{`${username}${endsInS ? "'" : "'s"} Agenda`}</span>
+			<Link to="/" className="text-decoration-none">
+				<span className="navbar-brand m-2 fs-4">{`${username}${endsInS ? "'" : "'s"} Agenda`}</span>
 			</Link>
 			<div className="ml-auto">
+				<Link to="/change_user">
+					<button className="btn btn-success m-2">Change User</button>
+				</Link>
 			</div>
 		</nav>
 	);
