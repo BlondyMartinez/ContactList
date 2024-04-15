@@ -1,0 +1,21 @@
+.odd {
+    --shadow-color: #A5D6A7;
+}
+
+.even {
+    --shadow-color: #388E3C;
+}
+
+.color-inner-shadow {
+    box-shadow: inset 8px 0 0px 0px var(--shadow-color),
+        5px 5px 10px rgb(214, 214, 214);
+    padding-left: 8px;
+}
+
+.icon-color {
+    color: var(--shadow-color);
+}
+
+body {
+    background-color: rgb(240, 239, 239);
+}
