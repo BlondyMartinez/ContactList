@@ -7,10 +7,10 @@ export const ChangeUser = () => (
 	<div className="container">
 		<div className="row d-flex flex-column align-items-center">
 			<div className="col-sm-12 col-md-8 col-lg-6">
-				<div className="d-flex justify-content-between">
+				<div className="d-flex justify-content-between align-items-center">
 					<UserList></UserList>
 					<Link to="/">
-						<button className="btn btn-secondary mt-2">get back to contacts</button>
+						<button className="btn btn-secondary">Contacts</button>
 					</Link>
 				</div>
 				<NewUser></NewUser>
