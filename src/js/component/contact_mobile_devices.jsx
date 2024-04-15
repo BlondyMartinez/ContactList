@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 
-const Contact = (props) => {
+const ContactMobile = (props) => {
     const { store, actions } = useContext(Context);
 
     const [isOpen, setIsOpen] = useState(false);
@@ -11,14 +11,14 @@ const Contact = (props) => {
 
     return (
         <div 
-            className="w-100 bg-white border border-1 rounded" 
+            className={`color-inner-shadow w-100 bg-white border border-1 rounded mb-2 ${props.index % 2 === 0 ? 'even' : 'odd'}`} 
             onMouseEnter={() => { setOnHover(true) }} 
             onMouseOver={() => { setOnHover(true) }} 
             onMouseLeave={() => { setOnHover(false) }}
         >
             <div className="d-flex align-items-center justify-content-between">   
                 <div className="d-flex align-items-center">
-                    <Icon style={{ fontSize: "4rem" }} icon="ph:user-circle-duotone" /> 
+                    <Icon className="icon-color" style={{ fontSize: "4rem" }} icon="ph:user-circle-duotone" /> 
                     <h5>{props.name}</h5>
                 </div>
                 <div>
@@ -69,4 +69,4 @@ const Contact = (props) => {
     )
 }
 
-export default Contact;
+export default ContactMobile;
