@@ -22,15 +22,17 @@ const useFormValidation = () => {
 
         if (store.editing) {
             const currentContact = store.contacts.find(contact => contact.id === store.currentID);
+            let phoneInfo = {};
 
-            let phoneInfo = parsePhoneNumber(currentContact.phone);
-
-            store.selectedAlphaCode = phoneInfo.country;
-            store.selectedCode = phoneInfo.countryCallingCode; 
+            if(currentContact.phone !== "") {
+                phoneInfo = parsePhoneNumber(currentContact.phone);
+                setPhone(phoneInfo.nationalNumber.replace(/\s/g, ''));
+                store.selectedAlphaCode = phoneInfo.country;
+                store.selectedCode = phoneInfo.countryCallingCode; 
+            }
 
             setName(currentContact.name);
             setEmail(currentContact.email);
-            setPhone(phoneInfo.nationalNumber.replace(/\s/g, ''));
             setAddress(currentContact.address);
         }
     }, []);
