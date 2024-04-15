@@ -4,7 +4,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			users: [],
-			user: { "slug": "blondy" },
+			guest: { "slug": "Guest", "id": "guest" },
+			user: { "slug": "Guest", "id": "guest" },
 			contacts: [],
 			selectedCode: "",
 			selectedAlphaCode: "",
@@ -12,10 +13,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			currentID: null,
 		},
 		actions: {
+			setCurrentUser: (user) => {
+				setStore({ "user": user});
+			},
+
 			loadUserList: () => {
 				fetch(`https://playground.4geeks.com/contact/agendas?offset=0&limit=100`)
 				.then(response => { return response.json(); })
-				.then(data => { setStore({ "users": data.users }); })
+				.then(data => { setStore({ "users": [getStore().guest, ...data.agendas] }) })
 				.catch(error => { console.error('Error fetching users:', error); });
 			},
 
