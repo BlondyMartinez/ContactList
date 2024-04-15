@@ -9,7 +9,7 @@ const GuestAlert = () => {
                 <div className="row d-flex justify-content-center">
                     <div className=" col-sm-11 col-md-8 col-lg-6 m-2 mb-0">
                         <div className="alert alert-danger">
-                            While in guest mode, contacts will be lost when the site is refreshed or when the user is changed.
+                            In guest mode, any contacts added will be temporary and will not persist when the page is refreshed or when the user switches to a different account.
                         </div>
                     </div>
                 </div>

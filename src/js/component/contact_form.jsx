@@ -99,7 +99,7 @@ const ContactForm = () => {
             <button className="btn btn-success w-100">Save</button>
 
             <Link to="/">
-				<span>or get back to contacts</span>
+                <button className="btn btn-secondary my-3 w-100">or get back to contacts</button>
 			</Link>
         </form>
     )

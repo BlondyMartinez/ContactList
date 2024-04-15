@@ -1,8 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 
 const NewUser = () => {
-    const { store, actions } = useContext(Context);
+    const { store, actions, setStore } = useContext(Context);
     const [isOpen, setIsOpen] = useState(false);
 
     const [username, setUsername] = useState('');
@@ -21,23 +21,30 @@ const NewUser = () => {
 
 
     return (
-        <div className="mt-2 card">
-            <button className="btn btn-success w-100" onClick={() => setIsOpen(!isOpen)}>New User</button>
-            { isOpen &&
-                <div className="p-2">
-                    <h2 className="text-center">Create user</h2>
-                    <div className="mb-3">
-                        <label htmlFor="username" className="form-label">Username</label>
-                        <input type="text" className="form-control" id="username" placeholder="Enter username" value={username} onChange={handleChange} required/>
-                    </div>
-                    {username != '' && 
-                        <div className={`form-text ${validUsername ? "text-success" :  "text-danger"} mb-2`}>
-                            {validUsername ? "Valid username" : "Username already exists"}
-                        </div>
-                    }
-                    <button className="btn btn-success w-100" disabled={!validUsername} onClick={() => { if(validUsername) actions.createUser(username); }}>Save</button>
+        <div className="mt-2">
+            { store.userCreated &&
+                <div className="alert alert-success">
+                    User created successfully.
                 </div>
             }
+            <div className="card">
+                <button className="btn btn-success w-100" onClick={() => setIsOpen(!isOpen)}>New User</button>
+                { isOpen &&
+                    <div className="p-2">
+                        <h2 className="text-center">Create user</h2>
+                        <div className="mb-3">
+                            <label htmlFor="username" className="form-label">Username</label>
+                            <input type="text" className="form-control" id="username" placeholder="Enter username" value={username} onChange={handleChange} required/>
+                        </div>
+                        {username != '' && 
+                            <div className={`form-text ${validUsername ? "text-success" :  "text-danger"} mb-2`}>
+                                {validUsername ? "Valid username" : "Username already exists"}
+                            </div>
+                        }
+                        <button className="btn btn-success w-100" disabled={!validUsername} onClick={() => { if(validUsername) actions.createUser(username); }}>Save</button>
+                    </div>
+                }
+            </div>
 	    </div>
     );
 };

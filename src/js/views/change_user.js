@@ -7,11 +7,13 @@ export const ChangeUser = () => (
 	<div className="container">
 		<div className="row d-flex flex-column align-items-center">
 			<div className="col-sm-12 col-md-8 col-lg-6">
-				<UserList></UserList>
+				<div className="d-flex justify-content-between">
+					<UserList></UserList>
+					<Link to="/">
+						<button className="btn btn-secondary mt-2">get back to contacts</button>
+					</Link>
+				</div>
 				<NewUser></NewUser>
-				<Link to="/">
-					<span>get back to contacts</span>
-				</Link>
 			</div>
 		</div>
 	</div>
