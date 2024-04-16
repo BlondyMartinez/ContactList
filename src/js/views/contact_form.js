@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/new_contact.css";
+import "../../styles/forms.css";
 import NewContact from "../component/contact_form.jsx"; 
 
 export const ContactFormPage = () => (

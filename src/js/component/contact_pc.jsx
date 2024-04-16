@@ -51,9 +51,8 @@ const Contact = (props) => {
 
                     <div className="col-4 d-flex flex-column justify-content-center align-items-center">
                         <h5>Address</h5>
-                        <div className={`d-flex align-items-center justify-content-center ${props.address === "" ? 'invisible' : ''}`}>
-                            <Icon className="fs-6 me-1" icon="bi:house-fill" />
-                            <span>{props.address}</span>
+                        <div className={`${props.address === "" ? 'invisible' : ''} text-center p-2`}>
+                            <span><Icon className="fs-6 me-1" icon="bi:house-fill" />{props.address}</span>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../../styles/forms.css";
 import UserList from "../component/user_list.jsx"; 
 import NewUser from "../component/new_user.jsx";
 

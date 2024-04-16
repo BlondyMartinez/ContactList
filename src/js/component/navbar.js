@@ -14,11 +14,11 @@ export const Navbar = () => {
 
 
 	return (
-		<nav className="navbar navbar-dark bg-dark mb-2 sticky-top">
-			<Link to="/" className="text-decoration-none">
-				<span className="navbar-brand m-2 fs-4">{`${username}${endsInS ? "'" : "'s"} Contact List`}</span>
-			</Link>
-			<div className="ml-auto">
+		<nav className="navbar navbar-dark bg-dark mb-2 sticky-top d-flex justify-content-center">
+			<div className="col-sm-12 col-lg-8 col-md-10 d-flex justify-content-between align-items-center">
+				<Link to="/" className="text-decoration-none">
+					<span className="navbar-brand m-2 fs-4">{`${username}${endsInS ? "'" : "'s"} Contact List`}</span>
+				</Link>
 				<Link to="/change_user">
 					<button className="btn btn-success m-2">Change User</button>
 				</Link>

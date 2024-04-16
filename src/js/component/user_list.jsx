@@ -14,21 +14,19 @@ const UserList = () => {
     }, [store.user, store.users]);
 
     return (
-        <div className="d-flex align-items-center justify-content-center g-1">
-            <div className="col-auto fw-bold ps-2">Choose user:</div>
-            <div className="col-auto">
-                <select 
-                    className="form-select" 
-                    aria-label="User list" 
-                    id="user-select"
-                    value={selectedValue}
-                    onChange={(e) => actions.getSelectedUser(e.target.value)}
-                >
-                    {store.users.map((user) => (
-                        <option key={user.id} value={`${user.slug}_${user.id === "guest" ? 'guest' : user.id}`}>{user.slug}</option>
-                    ))}
-                </select>
-            </div>
+        <div className="d-flex align-items-center justify-content-center">
+            <div className="fw-bold pe-2">Choose user:</div>
+            <select 
+                className="form-select select-options" 
+                aria-label="User list" 
+                id="user-select"
+                value={selectedValue}
+                onChange={(e) => actions.getSelectedUser(e.target.value)}
+            >
+                {store.users.map((user) => (
+                    <option key={user.id} value={`${user.slug}_${user.id === "guest" ? 'guest' : user.id}`}>{user.slug}</option>
+                ))}
+            </select>
         </div>
     );
 };
