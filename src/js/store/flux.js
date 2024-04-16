@@ -18,12 +18,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			getSelectedUser: (value) => {
-				const [slug, id] = value.split("_");
-				
-				if (id === "guest") {
-					setStore({ "user": getStore().guest });
-				} else {
-					const selectedUser = { "slug": slug, "id": id };
+				const lastUnderscoreIndex = value.lastIndexOf("_");
+				if (lastUnderscoreIndex !== -1) {
+					const slug = value.substring(0, lastUnderscoreIndex);
+					const id = value.substring(lastUnderscoreIndex + 1);
+					const selectedUser = id === "guest" ? { "user": getStore().guest } : { "slug": slug, "id": id };
 					setStore({ "user": selectedUser });
 				}
 			},
