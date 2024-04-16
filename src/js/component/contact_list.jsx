@@ -13,7 +13,7 @@ const ContactList = () => {
     useEffect(() => {
         if(store.searchValue !== "") setContacts(store.filteredContacts);
         else setContacts(store.contacts);
-    }, [store.searchValue, store.filteredContacts])
+    }, [store.searchValue, store.filteredContacts, store.contacts])
 
     const [isMobile, setIsMobile] = useState(window.matchMedia('(max-width: 1024px)').matches);
 
