@@ -9,7 +9,7 @@ const SearchBar = () => {
         store.contacts.length > 0 &&
             (<div className="d-flex align-items-center search-bar">
                 <Icon className="fs-3" icon="material-symbols:search" />
-                <input className="search-bar p-0" type="text" value={store.searchValue} onChange={(e) => { actions.setSearchValue(e.target.value) }} />
+                <input className="search-bar py-0 px-3" type="text" value={store.searchValue} onChange={(e) => { actions.setSearchValue(e.target.value) }} />
                 <button type="button" className="btn btn-icon p-0" onClick={() => actions.setSearchValue("")}>
                     <Icon className="fs-5" icon="material-symbols:close" />
                 </button>
