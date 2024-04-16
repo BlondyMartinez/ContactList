@@ -26,6 +26,10 @@ const injectContext = PassedComponent => {
 			else state.store.contacts = [];
 		}, [state.store.user]);
 
+		useEffect(() => {
+			if(state.store.searchValue !== "") state.actions.filterContacts(state.store.searchValue);
+		}, [state.store.searchValue])
+
 		return (
 			<Context.Provider value={state}>
 				<PassedComponent {...props} />

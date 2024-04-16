@@ -8,11 +8,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user: { "slug": "Guest", "id": "guest" },
 			userCreated: false,
 			contacts: [],
+			filteredContacts: [],
 			selectedCode: "",
 			selectedAlphaCode: "",
 			editing: false,
 			currentID: null,
 			currentPage: "home",
+			searchValue: "",
 		},
 		actions: {
 			getSelectedUser: (value) => {
@@ -83,7 +85,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} else setStore({ contacts: [...getStore().contacts, contact] });
 			},
 
-			deleteContact(id) {
+			deleteContact: (id) => {
 				if(getStore().user.id !== "guest") {
 					const config = { 
 						method: "DELETE",
@@ -102,7 +104,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			editContact(name, email, phone, address, id) {
+			editContact: (name, email, phone, address, id) => {
 				let formattedPhone = "";
 				if(phone !== "") formattedPhone = parsePhoneNumberFromString('+' + getStore().selectedCode + phone).formatInternational();
 
@@ -136,6 +138,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				}
 			},
+
+			setSearchValue: (value) => {
+				setStore({ searchValue: value });
+			},
+
+			filterContacts: (filter) => {
+				const lowercaseFilter = filter.trim().toLowerCase();
+				const filteredContacts = getStore().contacts.filter(contact => {
+					const lowercaseName = contact.name.toLowerCase();
+					return lowercaseName.includes(lowercaseFilter);
+				});
+				setStore({ filteredContacts: filteredContacts });
+			}
 		}
 	};
 };

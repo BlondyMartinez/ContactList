@@ -5,10 +5,15 @@ import ContactPC from "./contact_pc.jsx"
 
 const ContactList = () => {
     const { store } = useContext(Context);
+    const [contacts, setContacts] = useState(store.contacts)
 
-    const contacts = store.contacts;
     store.editing = false;
     store.userCreated = false;
+
+    useEffect(() => {
+        if(store.searchValue !== "") setContacts(store.filteredContacts);
+        else setContacts(store.contacts);
+    }, [store.searchValue, store.filteredContacts])
 
     const [isMobile, setIsMobile] = useState(window.matchMedia('(max-width: 1024px)').matches);
 
