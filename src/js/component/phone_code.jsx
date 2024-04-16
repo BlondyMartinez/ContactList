@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 
 const PhoneCode = ({ phone }) => {
-  const { store } = useContext(Context);
+  const { store, actions } = useContext(Context);
   const [selectedCode, setSelectedCode] = useState('');
   const [selectedAlphaCode, setSelectedAlphaCode] = useState('');
   const [countryData, setCountryData] = useState([]);
@@ -20,8 +20,8 @@ const PhoneCode = ({ phone }) => {
   }, [store.selectedCode, store.selectedAlphaCode]);
 
   const handleCodeChange = (e) => {
-    store.selectedAlphaCode = e.target.value.split('_')[0];
-    store.selectedCode = e.target.value.split('_')[1]
+    actions.setAlphaCode(e.target.value.split('_')[0]);
+    actions.setCode(e.target.value.split('_')[1]);
     setSelectedCode(`${store.selectedAlphaCode}_${store.selectedCode}`)
     setSelectedAlphaCode(store.selectedAlphaCode);
   };

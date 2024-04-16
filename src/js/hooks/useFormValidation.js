@@ -24,19 +24,13 @@ const useFormValidation = () => {
             const currentContact = store.contacts.find(contact => contact.id === store.currentID);
             let phoneInfo = {};
 
-            try {
+            if(currentContact.phone !== "") {
                 phoneInfo = parsePhoneNumber(currentContact.phone);
-            } catch (error) {
-                phoneInfo = {}; 
-            }
-
-            if(Object.keys(phoneInfo).length === 1) {
                 setPhone(phoneInfo.nationalNumber.replace(/\s/g, ''));
                 store.selectedAlphaCode = phoneInfo.country;
                 store.selectedCode = phoneInfo.countryCallingCode; 
             }
 
-            setPhone("");
             setName(currentContact.name);
             setEmail(currentContact.email);
             setAddress(currentContact.address);
@@ -49,7 +43,7 @@ const useFormValidation = () => {
 
     useEffect(() => {
         validatePhoneNumber();
-    }, [phone]);
+    }, [phone, store.selectedAlphaCode, store.selectedCode]);
 
     useEffect(() => {
         validate();

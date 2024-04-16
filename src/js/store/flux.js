@@ -16,6 +16,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			searchValue: "",
 		},
 		actions: {
+			setCode: (value)  => {
+				setStore({ selectedCode: value })
+			},
+
+			setAlphaCode: (value) => {
+				setStore({ selectedAlphaCode: value })
+			},
+
 			getSelectedUser: (value) => {
 				const lastUnderscoreIndex = value.lastIndexOf("_");
 				if (lastUnderscoreIndex !== -1) {
