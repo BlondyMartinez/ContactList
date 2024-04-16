@@ -8,7 +8,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user: { "slug": "Guest", "id": "guest" },
 			userCreated: false,
 			contacts: [],
-			filteredContacts: [],
 			selectedCode: "",
 			selectedAlphaCode: "",
 			editing: false,
@@ -143,15 +142,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setSearchValue: (value) => {
 				setStore({ searchValue: value });
 			},
-
-			filterContacts: (filter) => {
-				const lowercaseFilter = filter.trim().toLowerCase();
-				const filteredContacts = getStore().contacts.filter(contact => {
-					const lowercaseName = contact.name.toLowerCase();
-					return lowercaseName.includes(lowercaseFilter);
-				});
-				setStore({ filteredContacts: filteredContacts });
-			}
 		}
 	};
 };
