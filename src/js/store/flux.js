@@ -22,7 +22,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (lastUnderscoreIndex !== -1) {
 					const slug = value.substring(0, lastUnderscoreIndex);
 					const id = value.substring(lastUnderscoreIndex + 1);
-					const selectedUser = id === "guest" ? { "user": getStore().guest } : { "slug": slug, "id": id };
+					const selectedUser = { "slug": slug, "id": id };
 					setStore({ "user": selectedUser });
 				}
 			},
@@ -35,10 +35,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			loadContactList: () => {
-				fetch(`https://playground.4geeks.com/contact/agendas/${getStore().user.slug}/contacts`)
-				.then(response => { return response.json(); })
-				.then(data => { setStore({ "contacts": data.contacts }); })
-				.catch(error => { console.error('Error fetching contacts:', error); });
+				if(getStore().user.id && getStore().user.id !== "guest") {
+					fetch(`https://playground.4geeks.com/contact/agendas/${getStore().user.slug}/contacts`)
+					.then(response => { return response.json(); })
+					.then(data => { setStore({ "contacts": data.contacts }); })
+					.catch(error => { console.error('Error fetching contacts:', error); });
+				}
 			},
 
 			createUser: (username) => {
