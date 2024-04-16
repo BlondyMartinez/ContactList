@@ -12,6 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			selectedAlphaCode: "",
 			editing: false,
 			currentID: null,
+			currentPage: "home",
 		},
 		actions: {
 			getSelectedUser: (value) => {
@@ -62,32 +63,43 @@ const getState = ({ getStore, getActions, setStore }) => {
 					"phone": formattedPhone,
 					"email": email,
 					"address": address,
+					"id": getStore().user.id === "guest" ? name + Math.random() : ""
 				}
 
-				const config = { 
-					method: "POST",
-					body: JSON.stringify(contact),
-					headers: {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json'
+				if (getStore().user.id !== "guest") {
+					const config = { 
+						method: "POST",
+						body: JSON.stringify(contact),
+						headers: {
+							'Accept': 'application/json',
+							'Content-Type': 'application/json'
+						}
 					}
-				}
 
-				fetch(`https://playground.4geeks.com/contact/agendas/${getStore().user.slug}/contacts`, config)
-				.then(response => { return response.json(); })
-				.then(() => getActions().loadContactList())
-				.catch(error => { console.error('Error fetching contacts:', error); });
+					fetch(`https://playground.4geeks.com/contact/agendas/${getStore().user.slug}/contacts`, config)
+					.then(response => { return response.json(); })
+					.then(() => getActions().loadContactList())
+					.catch(error => { console.error('Error fetching contacts:', error); });
+				} else setStore({ contacts: [...getStore().contacts, contact] });
 			},
 
 			deleteContact(id) {
-				const config = { 
-					method: "DELETE",
-					headers: { 'Accept': 'application/json' }
-				}
+				if(getStore().user.id !== "guest") {
+					const config = { 
+						method: "DELETE",
+						headers: { 'Accept': 'application/json' }
+					}
 
-				fetch(`https://playground.4geeks.com/contact/agendas/${getStore().user.slug}/contacts/${id}`, config)
-				.then(() => getActions().loadContactList())
-				.catch(error => { console.error('Error fetching contacts:', error); });
+					fetch(`https://playground.4geeks.com/contact/agendas/${getStore().user.slug}/contacts/${id}`, config)
+					.then(() => getActions().loadContactList())
+					.catch(error => { console.error('Error fetching contacts:', error); });
+				} else {
+					const index = getStore().contacts.findIndex(element => element.id === id);
+					if (index !== -1) {
+						const updatedContacts = [...getStore().contacts.slice(0, index), ...getStore().contacts.slice(index + 1)];
+						setStore({ contacts: updatedContacts });
+					}
+				}
 			},
 
 			editContact(name, email, phone, address, id) {
@@ -101,19 +113,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 					"address": address,
 				}
 
-				const config = { 
-					method: "PUT",
-					body: JSON.stringify(contact),
-					headers: {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json'
+				if(getStore().user.id !== "guest") {
+					const config = { 
+						method: "PUT",
+						body: JSON.stringify(contact),
+						headers: {
+							'Accept': 'application/json',
+							'Content-Type': 'application/json'
+						}
+					}
+
+					fetch(`https://playground.4geeks.com/contact/agendas/${getStore().user.slug}/contacts/${id}`, config)
+					.then(response => { return response.json(); })
+					.then(() => getActions().loadContactList())
+					.catch(error => { console.error('Error fetching contacts:', error); });
+				} else {
+					const index = getStore().contacts.findIndex(element => element.id === id);
+					if (index !== -1) {
+						const updatedContacts = [...getStore().contacts];
+						updatedContacts[index] = contact;
+						setStore({ contacts: updatedContacts });
 					}
 				}
-
-				fetch(`https://playground.4geeks.com/contact/agendas/${getStore().user.slug}/contacts/${id}`, config)
-				.then(response => { return response.json(); })
-				.then(() => getActions().loadContactList())
-				.catch(error => { console.error('Error fetching contacts:', error); });
 			},
 		}
 	};
