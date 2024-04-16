@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 
 const NewUser = () => {
-    const { store, actions, setStore } = useContext(Context);
+    const { store, actions } = useContext(Context);
     const [isOpen, setIsOpen] = useState(false);
 
     const [username, setUsername] = useState('');
