@@ -16,7 +16,7 @@ const DeleteConfirmationModal = (props) => {
                         <span>{`Are you sure you want to delete ${props.name} from your contact list?`}</span>
                     </div>
                     <div className="modal-footer modal-bg">
-                        <button className="btn btn-success" onClick={() => { actions.deleteContact(props.id) }}>Yes</button>
+                        <button className="btn btn-success" onClick={() => { actions.deleteContact(props.id); }}>Yes</button>
                         <button className="btn btn-danger" onClick={props.onClose}>No</button>
                     </div>
                 </div>

@@ -8,7 +8,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user: { "slug": "Guest", "id": "guest" },
 			userCreated: false,
 			contacts: [],
-			filteredContacts: [],
 			selectedCode: "",
 			selectedAlphaCode: "",
 			editing: false,
@@ -18,11 +17,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			getSelectedUser: (value) => {
-				const [slug, id] = value.split("_");
-				
-				if (id === "guest") {
-					setStore({ "user": getStore().guest });
-				} else {
+				const lastUnderscoreIndex = value.lastIndexOf("_");
+				if (lastUnderscoreIndex !== -1) {
+					const slug = value.substring(0, lastUnderscoreIndex);
+					const id = value.substring(lastUnderscoreIndex + 1);
 					const selectedUser = { "slug": slug, "id": id };
 					setStore({ "user": selectedUser });
 				}
@@ -36,10 +34,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			loadContactList: () => {
-				fetch(`https://playground.4geeks.com/contact/agendas/${getStore().user.slug}/contacts`)
-				.then(response => { return response.json(); })
-				.then(data => { setStore({ "contacts": data.contacts }); })
-				.catch(error => { console.error('Error fetching contacts:', error); });
+				if(getStore().user.id && getStore().user.id !== "guest") {
+					fetch(`https://playground.4geeks.com/contact/agendas/${getStore().user.slug}/contacts`)
+					.then(response => { return response.json(); })
+					.then(data => { setStore({ "contacts": data.contacts }); })
+					.catch(error => { console.error('Error fetching contacts:', error); });
+				}
 			},
 
 			createUser: (username) => {
@@ -142,15 +142,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setSearchValue: (value) => {
 				setStore({ searchValue: value });
 			},
-
-			filterContacts: (filter) => {
-				const lowercaseFilter = filter.trim().toLowerCase();
-				const filteredContacts = getStore().contacts.filter(contact => {
-					const lowercaseName = contact.name.toLowerCase();
-					return lowercaseName.includes(lowercaseFilter);
-				});
-				setStore({ filteredContacts: filteredContacts });
-			}
 		}
 	};
 };

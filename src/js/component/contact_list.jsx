@@ -5,15 +5,9 @@ import ContactPC from "./contact_pc.jsx"
 
 const ContactList = () => {
     const { store } = useContext(Context);
-    const [contacts, setContacts] = useState(store.contacts)
 
     store.editing = false;
     store.userCreated = false;
-
-    useEffect(() => {
-        if(store.searchValue !== "") setContacts(store.filteredContacts);
-        else setContacts(store.contacts);
-    }, [store.searchValue, store.filteredContacts])
 
     const [isMobile, setIsMobile] = useState(window.matchMedia('(max-width: 1024px)').matches);
 
@@ -28,14 +22,18 @@ const ContactList = () => {
 
     return (
         <div style={{ paddingBottom: "4rem" }} className="d-flex flex-column align-items-center justify-content-center">
-            {contacts.map((contact, index) => (
-                <React.Fragment key={contact.id}>
-                    { isMobile 
-                        ? <ContactMobile name={contact.name} id={contact.id} email={contact.email} phone={contact.phone} address={contact.address} index={index} /> 
-                        : <ContactPC name={contact.name} id={contact.id} email={contact.email} phone={contact.phone} address={contact.address} index={index} />
-                    }
-                </React.Fragment>
-            ))}
+            {store.contacts.map((contact, index) => {
+                if (store.searchValue !== "" && !contact.name.toLowerCase().includes(store.searchValue.toLowerCase())) return null;
+
+                return (
+                    <React.Fragment key={contact.id}>
+                        {isMobile 
+                            ? <ContactMobile name={contact.name} id={contact.id} email={contact.email} phone={contact.phone} address={contact.address} index={index} /> 
+                            : <ContactPC name={contact.name} id={contact.id} email={contact.email} phone={contact.phone} address={contact.address} index={index} />
+                        }
+                    </React.Fragment>
+                );
+            })}
         </div>
     );
 };
