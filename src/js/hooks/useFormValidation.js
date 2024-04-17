@@ -24,12 +24,19 @@ const useFormValidation = () => {
             const currentContact = store.contacts.find(contact => contact.id === store.currentID);
             let phoneInfo = {};
 
-            if(currentContact.phone !== "") {
+            try {
                 phoneInfo = parsePhoneNumber(currentContact.phone);
+            } catch (error) {
+                phoneInfo = {}; 
+            }
+
+            if(Object.keys(phoneInfo).length === 1) {
                 setPhone(phoneInfo.nationalNumber.replace(/\s/g, ''));
                 store.selectedAlphaCode = phoneInfo.country;
                 store.selectedCode = phoneInfo.countryCallingCode; 
             }
+
+            setPhone("");
 
             setName(currentContact.name);
             setEmail(currentContact.email);
