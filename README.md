@@ -1,6 +1,6 @@
-<h1>Todo List App</h1>
+<h1>Contact List App</h1>
 <h2>Overview</h2>
-This is a simple todo list application built with React, featuring REST API integration for enhanced functionality. Users can create new accounts, manage tasks, and switch between light and dark themes.
+This is a simple contact list list application built with React, featuring REST API integration for enhanced functionality. Users can create new accounts; add, edit and delete users and search through the list.
 <h4><a href="https://blondym-contact-list.vercel.app/">Deployment</a></h4>
 <h2>Features</h2>
 <ul>
